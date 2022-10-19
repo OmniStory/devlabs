@@ -3,12 +3,24 @@
     <meta charset="utf-8" />
 	<script src="https://cdn.jsdelivr.net/npm/omnitalk-js-sdk@latest/omnitalk.min.js"></script>
     <script src="./call.js"></script>
+	<style>
+		video {
+			max-width:35%;
+			background:black;
+		}
+	</style>
   </head>
   <body>
     <input type="text" id="regiNum" />
     <button type="button" id="regiBtn">번호 등록</Button>
     <input type="text" id="callNum" />
     <button type="button" id="callBtn">전화 걸기</Button>
+
+	<div style="margin-top:15px;">
+		<video id="Omnitalk-LocalVideo-0" autoplay playsinline></video>
+		<video id="Omnitalk-RemoteVideo-0" autoplay playsinline></video>
+	</div>
+
 
 	<div id=log></div>
   </body>
