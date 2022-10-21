@@ -1,5 +1,5 @@
 'use strict'
-const omnitalk = new Omnitalk("SERVICE ID를 입력하세요");
+const omnitalk = new Omnitalk("GKTT-FO2B-4OLT-VBUI");
 omnitalk.onmessage = async (evt) => {
 	let log = document.querySelector("#log");
 	log.insertAdjacentHTML('beforeend', `<p>${evt.cmd}</p>`);
