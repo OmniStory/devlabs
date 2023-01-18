@@ -6,8 +6,6 @@ const PORT = 3000;
 // use static files
 app.use(express.static(__dirname ));
 
-console.log('dirname: ', __dirname);
-
 // set path
 app.get('/', (req, res)=>{
   res.sendFile( __dirname + "/main.html");
