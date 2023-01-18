@@ -74,5 +74,11 @@ window.onload = async function(){
 		})
 	});
 
+	leaveBtn.addEventListener('click', async function(){
+		// close the conference
+		const result = await omnitalk.leave(sessionId.session);
+		console.log('leave result: ', result);
+	});
+
 	
 }
