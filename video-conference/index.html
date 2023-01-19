@@ -2,7 +2,7 @@
   <head> 
     <meta charset="utf-8" />
 	<script src="https://cdn.jsdelivr.net/npm/omnitalk-js-sdk@latest/omnitalk.min.js"></script>
-    <script src="./conference.js"></script>
+    <script src="video-conference/conference.js"></script>
 	<style>
 		video {
 			max-width:35%;
@@ -15,7 +15,10 @@
     <button type="button" id="regiBtn">영상 컨퍼런스 생성</Button>
     <input type="text" id="roomId" />
     <button type="button" id="joinBtn">컨퍼런스 참여</Button>
-
+	<br>
+	<br>
+	<button type="button" id="leaveBtn">종료 click</Button>
+	
 	<div id=videoDisplay style="margin-top:15px;display:none;">
 		<video id="Omnitalk-LocalVideo-0" autoplay playsinline></video>
 		<video id="Omnitalk-RemoteVideo-0" autoplay playsinline></video>

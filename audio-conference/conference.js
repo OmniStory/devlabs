@@ -1,9 +1,12 @@
 'use strict'
 
 window.onload = async function(){
-	const omnitalk = new Omnitalk("SERVICE ID를 입력하세요");
+	// pass argument(s)
+	// service id for web
+	// service id, service key for app
+	const omnitalk = new Omnitalk('service_id', 'service_key');
 	omnitalk.onmessage = async (evt) => {
-		let log = document.querySelector("#log");
+		const log = document.querySelector("#log");
 		switch (evt.cmd) {
 			case "SESSION_EVENT":
 				log.insertAdjacentHTML('beforeend', `<p>Session: ${evt.session}</p>`);
@@ -20,32 +23,36 @@ window.onload = async function(){
 				break;
 		}
 	}
-	let sessionId = await omnitalk.createSession();
 
-	let regiBtn = document.querySelector("#regiBtn");
-	let joinBtn = document.querySelector("#joinBtn");
+	// start session. create web socket
+	const session = await omnitalk.createSession();
 
+	const regiBtn = document.querySelector("#regiBtn");
+	const joinBtn = document.querySelector("#joinBtn");
+
+	
 	regiBtn.addEventListener("click", async function() {
-		let roomName = document.getElementById('roomName').value;
-		let roomId = await omnitalk.createRoom("audioroom", roomName);
-		let roomlist = await omnitalk.roomList("audioroom");
-		log.insertAdjacentHTML('beforeend', `<p>Audio RoomId: ${roomId}</p>`);
+		const roomName = document.getElementById('roomName').value;
+		const roomObj = await omnitalk.createRoom("audioroom", roomName);
+		const roomlist = await omnitalk.roomList("audioroom");
+		log.insertAdjacentHTML('beforeend', `<p>Audio RoomId: ${roomObj.room_id}</p>`);
 
 		roomlist.map((item, index) => {
 			log.insertAdjacentHTML('beforeend', `<p>Roomlist-${index}: ${item.subject}, ${item.room_id}</p>`);
 		})
 		regiBtn.disabled = true;
-		document.getElementById("roomId").value = roomId;
+		document.getElementById("roomId").value = roomObj.room_id;
 	});
 
 	joinBtn.addEventListener("click", async function() {
-		let roomId = document.getElementById('roomId').value;
-		let result = await omnitalk.joinRoom(roomId);
-		let partilist = await omnitalk.partiList(roomId);
-		await omnitalk.publish("audiocall", false);
+		const roomId = document.getElementById('roomId').value;
+		const result = await omnitalk.joinRoom(roomId);
+		const pubResult = await omnitalk.publish("audiocall", false);
+		const partilist = await omnitalk.partiList(roomId);		
 
 		partilist.map((item, index) => {
 			log.insertAdjacentHTML('beforeend', `<p>Participant-${index}: ${item.user_id}</p>`);
 		})
 	});
 }
+
