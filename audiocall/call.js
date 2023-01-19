@@ -3,10 +3,10 @@
 // pass argument(s)
 // service id for web
 // service id, service key for app
-const omnitalk = new Omnitalk("FM51-HITX-IBPG-QN7H","FWIWblAEXpbIims");
+const omnitalk = new Omnitalk("service_id","service_key");
 
 omnitalk.onmessage = async (evt) => {
-	let log = document.querySelector("#log");
+	const log = document.querySelector("#log");
 	log.insertAdjacentHTML('beforeend', `<p>${evt.cmd}</p>`);
 
 	switch (evt.cmd) {
@@ -42,14 +42,14 @@ omnitalk.onmessage = async (evt) => {
 }
 
 window.onload = function(){
-	let regiBtn = document.querySelector("#regiBtn");
-	let callBtn = document.querySelector("#callBtn");
+	const regiBtn = document.querySelector("#regiBtn");
+	const callBtn = document.querySelector("#callBtn");
 
 	regiBtn.addEventListener("click", async function() {
 		const regiNum = document.getElementById('regiNum').value;
 
 		// start session. create web socket
-		await omnitalk.createSession(regiNum);
+		const session = await omnitalk.createSession(regiNum);
 	});
 
 	callBtn.addEventListener("click", async function() {
@@ -57,6 +57,6 @@ window.onload = function(){
 
 		// offer outgoing call
 		// pair with answerCall()
-		await omnitalk.offerCall("audiocall", callNum, false);
+		const offerCall = await omnitalk.offerCall("audiocall", callNum, false);
 	});
 }

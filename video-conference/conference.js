@@ -5,9 +5,9 @@ window.onload = async function(){
 	// pass argument(s)
 	// service id for web
 	// service id, service key for app
-	const omnitalk = new Omnitalk("FM51-HITX-IBPG-QN7H","FWIWblAEXpbIims");
+	const omnitalk = new Omnitalk("service_id","service_key");
 	omnitalk.onmessage = async (evt) => {
-		let log = document.querySelector("#log");
+		const log = document.querySelector("#log");
 		switch (evt.cmd) {
 			case "SESSION_EVENT":
 				log.insertAdjacentHTML('beforeend', `<p>Session: ${evt.session}</p>`);
@@ -28,20 +28,14 @@ window.onload = async function(){
 	
 	// start session. create web socket
 	const sessionId = await omnitalk.createSession();
-	console.log(sessionId);
 
-	let regiBtn = document.querySelector("#regiBtn");
-	let joinBtn = document.querySelector("#joinBtn");
+	const regiBtn = document.querySelector("#regiBtn");
+	const joinBtn = document.querySelector("#joinBtn");
 
 	regiBtn.addEventListener("click", async function() {
-		let roomName = document.getElementById('roomName').value;
-
-		// create room object
-		// second argument is subject of the room
-		let roomObj = await omnitalk.createRoom("videoroom", roomName);
-		
-		// get all active room lists as an array
-		let roomlist = await omnitalk.roomList("videoroom");
+		const roomName = document.getElementById('roomName').value;
+		const roomObj = await omnitalk.createRoom("videoroom", roomName);
+		const roomlist = await omnitalk.roomList("videoroom");
 		log.insertAdjacentHTML('beforeend', `<p>Video RoomId: ${roomObj.room_id}</p>`);
 
 		roomlist.map((item, index) => {
@@ -53,31 +47,19 @@ window.onload = async function(){
 
 	joinBtn.addEventListener("click", async function() {
 		document.getElementById('videoDisplay').style.display = "block";
-
-		// need to get room id for joining the room
-		let roomId = document.getElementById('roomId').value;
-
-		// join the room
-		await omnitalk.joinRoom(roomId);
-		let partilist = await omnitalk.partiList(roomId);
-		console.log('video conf partilist: ', partilist);
-
-		// start video conference
-		await omnitalk.publish("videocall", false);
-
+		const roomId = document.getElementById('roomId').value;
+		const joinResult = await omnitalk.joinRoom(roomId);
+		const partilist = await omnitalk.partiList(roomId);
+		const publishResult = await omnitalk.publish("videocall", false);
 
 		partilist.map((item, index) => {
 			log.insertAdjacentHTML('beforeend', `<p>Participant-${index}: ${item.user_id}</p>`);
-
-			// subscribe the video conference
 			omnitalk?.subscribe(item.publish_idx);
 		})
 	});
 
 	leaveBtn.addEventListener('click', async function(){
-		// close the conference
 		const result = await omnitalk.leave(sessionId.session);
-		console.log('leave result: ', result);
 	});
 
 	
