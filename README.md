@@ -10,7 +10,7 @@ OmniTalk의 JavaScript SDK 활용 샘플 코드입니다.
 ```
 npm install
 
-node index.js
+npm start
 ```
 
 ### 2️⃣ 터미널에서 LISTEN : 3000 출력으로 서버 연결 확인
