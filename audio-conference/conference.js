@@ -6,7 +6,7 @@ window.onload = async function(){
 	// service id, service key for app
 	const omnitalk = new Omnitalk('service_id', 'service_key');
 	omnitalk.onmessage = async (evt) => {
-		let log = document.querySelector("#log");
+		const log = document.querySelector("#log");
 		switch (evt.cmd) {
 			case "SESSION_EVENT":
 				log.insertAdjacentHTML('beforeend', `<p>Session: ${evt.session}</p>`);
